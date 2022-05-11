@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="js/geturl.js"></script>
+    <link rel="stylesheet" href="estilos.css">  
+</head>
+<body style="background: #eceff1 !important;">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <img src="logo.png"/>
+        <h1 class="text-center text-dark"><span class="badge badge-success">COLECCIÓN MACROINVERTEBRADOS ACUÁTICOS</span></h1>
+               
+        <a class="navbar-brand" href="principal.php">
+            <img src="https://cdn-icons-png.flaticon.com/32/295/295128.png" class="d-inline-block align-top" alt="">
+            Login
+          </a>
+          
+    </nav>
+    <div style="background: #eceff1;">
+        <h4 class="d-flex justify-content-center">
+            Listado de registros 
+        </h4>
+    </div>
+<br><br>
+<div style="background: #eceff1;">
+<h6 class="d-flex justify-content-center">
+En el CAMPO "Buscar Registro" usted tiene la posibilidad de hacer búsquedas por Orden, Familia, Nombre Cientifico, entre otras. Aparecerán solamente los datos existentes que coincidan con la busqueda en la base de datos.
+</h6>
+</div>
+<br><br><br>
+    <div class="table" >
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="text" placeholder="Buscar Registro" aria-label="Search" id="myInput" onkeyup="myFunction()">
+           
+          </form>
+          <div class="table-wrapper"> 
+        <table class="table table-striped" id="miTabla">
+            <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Cantidad Organismos</th> 
+                  <th>Orden</th> 
+                  <th>Familia</th> 
+                  <th>Nombre Cientifico</th>
+                  <th>Colector</th> 
+                  <th>Ubicacion</th>                         
+                </tr>    
+            </thead>
+            <tbody>
+                
+            </tbody>                        
+        </table>
+    </div> </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function(){
+       var url = "https://darwincore.000webhostapp.com/bd/select.php";
+       $.getJSON(url, function(result){
+        $.each(result, function(i, campo){
+          var id= campo.id;
+          var CantidadOrganismo= campo.CantidadOrganismo; 
+          var Orden= campo.Orden;
+          var Familia= campo.Familia;
+          var NombreCientifico= campo.NombreCientifico;
+          var Identificador= campo.Identificador;
+          var Ubicacion= campo.Ubicacion; 
+          
+          
+            $("tbody").append("<tr><td>"+id+"</td><td>"+CantidadOrganismo+"</td><td>"+Orden+"</td><td>"+Familia+"</td><td>"+NombreCientifico+"</td><td>"+Identificador+"</td><td>"+Ubicacion+"</td></tr>");
+        })
+       });
+    });
+
+   
+      
+</script>
+<script>
+    function myFunction() {
+        // Declare variables 
+        var input, filter, table, tr, td, i, j, visible;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("miTabla");
+        tr = table.getElementsByTagName("tr");
+      
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          visible = false;
+          /* Obtenemos todas las celdas de la fila, no sólo la primera */
+          td = tr[i].getElementsByTagName("td");
+          for (j = 0; j < td.length; j++) {
+            if (td[j] && td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+              visible = true;
+            }
+          }
+          if (visible === true) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+</script>
